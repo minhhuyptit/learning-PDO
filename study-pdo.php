@@ -33,11 +33,52 @@
     $stmt = $db->prepare($query);
     if($stmt->execute(array($id, $status))){
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){    //FETCH_OBJ: Lấy về dạng Object
-            echo "<pre>";
-            print_r($row);
-            echo "</pre>";
+            // echo "<pre>";
+            // print_r($row);
+            // echo "</pre>";
         }
     }
 
+    // 3.Insert
+    $query = "INSERT INTO ".DB_TABLE." (`name`, `status`, `ordering`) VALUES(:name, :st, :or)";
+    $stmt = $db->prepare($query);
+
+    // Cách 1   Placeholder - Single Variable
+    // $stmt->bindParam(':name', $name);
+    // $stmt->bindParam(':st', $status);
+    // $stmt->bindParam(':or', $ordering);
+    
+    // $name = 'React';
+    // $status = 1;
+    // $ordering = 10;
+
+    // $stmt->execute();
+
+
+    // Cách 2   Unamed Placeholder - Array
+    // $data = array(':name' => 'PHP', ':st' => 1, ':or' => 12);
+    // $stmt->execute($data);
+
+    
+    // Cách 3   Unamed Placeholder - Single Variable
+    // $query = "INSERT INTO ".DB_TABLE." (`name`, `status`, `ordering`) VALUES(?, ?, ?)";
+    // $stmt = $db->prepare($query);
+
+    // $stmt->bindParam(1, $name);
+    // $stmt->bindParam(2, $status);
+    // $stmt->bindParam(3, $ordering);
+
+    // $name = 'React Native';
+    // $status = 1;
+    // $ordering = 13;
+
+    // $stmt->execute();
+
+
+    // Cách 4
+    $query = "INSERT INTO ".DB_TABLE." (`name`, `status`, `ordering`) VALUES(?, ?, ?)";
+    $stmt = $db->prepare($query);
+    $data = ['Python', 0, 14];
+    $stmt->execute($data);
 
 ?>
