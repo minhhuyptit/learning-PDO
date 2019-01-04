@@ -1,4 +1,38 @@
+<?php
+	include_once 'autoload.php';
 
+	$db = new Database();
+	echo "<pre>";
+	print_r($db);
+	echo "</pre>";
+
+	$query = "SELECT *FROM ".DB_TABLE;
+	$listItem = $db->fetchAll($query);
+	$xhtml = '';
+	if(!empty($listItem)){
+		foreach($listItem as $item){
+			$status = ($item['status'] == 0) ? 'inactive' : 'active';
+			$xhtml .= '<tr>
+						<td  class="td-content"><input type="checkbox" name="cid[]" value="'.$item['id'].'"></td>
+						<td  class="td-content">'.$item['id'].'</td>
+						<td  class="text-left td-content">'.$item['name'].'</td>
+						<td  class="td-content">
+							'.HTMLHelper::showStatus($status).'
+						</td>
+						<td  class="td-content">
+							<div class="col-md-6 col-md-offset-3">
+								<input class="form-control text-center" type="text" name="ordering['.$item['id'].']" value="'.$item['ordering'].'">
+							</div>
+						</td>
+						<td  class="td-content"">
+							<button type="button" class="btn btn-warning btn-sm" >Edit</button>
+							<button type="button" class="btn btn-danger btn-sm" >Delete</button>
+						</td>
+					</tr>';
+		}
+	}
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -91,57 +125,7 @@
 										</tr>
 									</thead>
 									<tbody class="text-center">
-										<tr>
-											<td  class="td-content"><input type="checkbox" name="cid[]" value="1"></td>
-											<td  class="td-content">1</td>
-											<td  class="text-left td-content">Tý</td>
-											<td  class="td-content">
-												<button  type="button"class="btn btn-warning btn-sm btn-status" id="status-1">Inactive</button>
-											</td>
-											<td  class="td-content">
-												<div class="col-md-6 col-md-offset-3">
-													<input class="form-control text-center" type="text" name="ordering[1]" value="1">
-												</div>
-											</td>
-											<td  class="td-content"">
-												<button type="button" class="btn btn-warning btn-sm" >Edit</button>
-												<button type="button" class="btn btn-danger btn-sm" >Delete</button>
-											</td>
-										</tr>
-										<tr>
-											<td  class="td-content"><input type="checkbox" name="cid[]" value="2"></td>
-											<td  class="td-content">2</td>
-											<td  class="text-left td-content">Sửu</td>
-											<td  class="td-content"><button type="button" class="btn btn-success btn-sm btn-status" id="status-2">Active</button></td>
-											<td  class="td-content">
-												<div class="col-md-6 col-md-offset-3">
-													<input class="form-control text-center" type="text" name="ordering[2]" value="2">
-												</div>
-											</td>
-											<td  class="td-content"">
-												<button type="button" class="btn btn-warning btn-sm" >Edit</button>
-												<button type="button" class="btn btn-danger btn-sm" >Delete</button>
-											</td>
-										</tr>
-										<tr>
-											<td  class="td-content">
-												<input type="checkbox" name="cid[]" value="3">
-											</td>
-											<td  class="td-content">3</td>
-											<td  class="text-left td-content">Dần</td>
-											<td  class="td-content">
-												<button  type="button"class="btn btn-warning btn-sm btn-status" id="status-3">Inactive</button>
-											</td>
-											<td  class="td-content">
-												<div class="col-md-6 col-md-offset-3">
-													<input class="form-control text-center" type="text" name="ordering[3]" value="3">
-												</div>
-											</td>
-											<td  class="td-content"">
-												<button type="button" class="btn btn-warning btn-sm" >Edit</button>
-												<button type="button" class="btn btn-danger btn-sm" >Delete</button>
-											</td>
-										</tr>							
+										<?=$xhtml?>
 									</tbody>
 								</table>
 							</div>
