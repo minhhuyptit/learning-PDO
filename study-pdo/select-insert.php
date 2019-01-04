@@ -1,5 +1,5 @@
 <?php
-    include_once 'define.php';
+    include_once '../define.php';
 
     // 1.Khởi tạo kết nối PDO với mysql
     $options = array(
@@ -78,7 +78,9 @@
     // Cách 4
     $query = "INSERT INTO ".DB_TABLE." (`name`, `status`, `ordering`) VALUES(?, ?, ?)";
     $stmt = $db->prepare($query);
-    $data = ['Python', 0, 14];
+    $data = ['Laravel', 0, 17];
     $stmt->execute($data);
+
+    echo $db->lastInsertId();
 
 ?>
