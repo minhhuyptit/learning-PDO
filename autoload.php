@@ -1,5 +1,6 @@
 <?php
     include_once 'define.php';
+    Session::init();
     function __autoload($className){
         $fileName = "libs/" . $className . ".php";
         if(file_exists($fileName)){

@@ -10,6 +10,7 @@ class Database{
 			$params['password']	= DB_PASS;
 			$params['database']	= DB_NAME;
 			$params['table']	= DB_TABLE;
+			$this->table = $params['table'];
 		}
 
 		$options = array(
@@ -104,7 +105,7 @@ class Database{
 	// DELETE
 	public function delete($where){
 		$newWhere 	= $this->createWhereDeleteSQL($where);
-		$query 		= "DELETE FROM `$this->table` WHERE `id` IN ($newWhere)";
+		$query 		= "DELETE FROM `$this->table` WHERE `id` IN ($newWhere)";	
 		$stmt = $this->execute($query);
 		return $stmt;
 	}

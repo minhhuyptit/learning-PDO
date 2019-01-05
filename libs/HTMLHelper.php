@@ -19,6 +19,19 @@ class HTMLHelper{
         return $xhtml;
     }
 
+    public static function cmsLinkSort($name, $column, $columnPost, $orderPost, $option = null){
+        $style = !empty($option['style']) ? 'style="'.$option['style'].'"' : '' ;
+        $img	= '<i class="fa fa-fw fa-sort"></i>';
+
+        $order	= ($orderPost == 'desc') ? 'asc' : 'desc';
+        
+        if($column == $columnPost){
+            $img	= '<i class="fa fa-fw fa-sort-'.$orderPost.'"></i>';
+        }
+        $xhtml = '<th '.$style.' class="text-center pointer" id="'.$column.'" onclick="javascript:sortList(\''.$column.'\',\''.$order.'\')">'.$name.$img.'</th>';
+        return $xhtml;
+ }
+
 }
 
 ?>
